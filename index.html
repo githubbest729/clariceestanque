@@ -90,11 +90,43 @@
   footer { text-align: center; padding: 30px 20px 50px; position: relative; z-index: 1; opacity: .8; }
   canvas { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
 
+  /* ---------- Countdown lock ---------- */
+  .lock { text-align: center; }
+  .clock { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .clock div { background: var(--plum); color: #fff; border-radius: 16px; min-width: 76px; padding: 12px 8px; }
+  .clock b { display: block; font: 600 2.2rem "Fraunces", serif; font-variant-numeric: tabular-nums; }
+  .clock span { font-size: .78rem; opacity: .8; }
+  .unveil { animation: unveil 1.3s ease both; }
+  @keyframes unveil { from { opacity: 0; filter: blur(14px); translate: 0 40px; } }
+
+  /* ---------- 3D cake ---------- */
+  model-viewer { width: 100%; height: 380px; --poster-color: transparent; background: transparent; }
+  .cake { text-align: center; }
+
+  /* ---------- Tilt parallax (Device Orientation sets --tx/--ty/--sx/--sy) ---------- */
+  .big { translate: var(--tx, 0px) var(--ty, 0px); transition: translate .12s linear; }
+  #sky { position: fixed; inset: 0; z-index: 0; pointer-events: none; translate: var(--sx, 0px) var(--sy, 0px); transition: translate .12s linear; }
+  #sky .balloon { position: absolute; }
+
+  /* ---------- View Transitions: message tab morph ---------- */
+  .letter { view-transition-name: letter; }
+  ::view-transition-group(letter) { animation-duration: .45s; }
+
+  /* ---------- Scroll-driven reveal (no JS) ---------- */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .songs li, .photo { animation: slidein linear both; animation-timeline: view(); animation-range: entry 0% cover 28%; }
+      @keyframes slidein { from { opacity: 0; translate: 0 70px; } to { opacity: 1; translate: 0 0; } }
+    }
+  }
+  footer .btn { margin-top: 14px; }
+
   @media (prefers-reduced-motion: reduce) { .balloon { display: none; } .big { animation: none; } * { scroll-behavior: auto; } }
 </style>
 </head>
 <body>
 <canvas id="confetti"></canvas>
+<div id="sky"></div>
 
 <!-- ========== HERO ========== -->
 <section class="hero">
@@ -104,8 +136,31 @@
   <button class="btn" id="party">🎉 Tap to celebrate</button>
 </section>
 
+<!-- ========== 3D CAKE (swap CAKE model src for your own .glb) ========== -->
+<section class="cake">
+  <h2>Your birthday cake 🎂</h2>
+  <p class="sub">Spin it with your finger, or tap the button to see it in your room</p>
+  <!-- PLACEHOLDER MODEL: replace src with your own cake, e.g. src="cake.glb" uploaded next to index.html -->
+  <model-viewer src="https://modelviewer.dev/shared-assets/models/Astronaut.glb" alt="3D birthday cake"
+    camera-controls auto-rotate shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look">
+    <button slot="ar-button" class="btn">🕶️ View in your room</button>
+  </model-viewer>
+</section>
+
+<!-- ========== COUNTDOWN LOCK ========== -->
+<section class="lock" id="countdown">
+  <h2>Something special unlocks at midnight 🔒</h2>
+  <p class="sub">Philippine Standard Time</p>
+  <div class="clock">
+    <div><b id="cd-d">00</b><span>days</span></div>
+    <div><b id="cd-h">00</b><span>hours</span></div>
+    <div><b id="cd-m">00</b><span>minutes</span></div>
+    <div><b id="cd-s">00</b><span>seconds</span></div>
+  </div>
+</section>
+
 <!-- ========== MESSAGES ========== -->
-<section id="message">
+<section id="message" hidden data-lock>
   <h2>A message for you 💌</h2>
   <p class="sub">Pick the one that fits your heart</p>
   <div class="letter">
@@ -144,7 +199,7 @@
 </section>
 
 <!-- ========== PHOTOS ========== -->
-<section id="photos">
+<section id="photos" hidden data-lock>
   <h2>Our memories 📸</h2>
   <p class="sub">Tap a photo to open it in full</p>
   <!-- Set each Drive file to "Anyone with the link" so previews show. Otherwise the colored placeholder appears. -->
@@ -165,14 +220,21 @@
   <div class="social"><a class="btn" target="_blank" rel="noopener" href="https://www.facebook.com/kylieeeejennerrr">💙 Visit Clarice on Facebook</a></div>
 </section>
 
-<footer>Made with love for my favorite cousin 💕</footer>
+<footer>Made with love for my favorite cousin 💕<br>
+  <button class="btn" id="share">🎁 Share my birthday</button>
+</footer>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 
 <script>
   /* Message tabs */
   document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
-    document.querySelectorAll('.tab, .msg').forEach(e => e.classList.remove('active'));
-    t.classList.add('active');
-    document.getElementById(t.dataset.target).classList.add('active');
+    const swap = () => {
+      document.querySelectorAll('.tab, .msg').forEach(e => e.classList.remove('active'));
+      t.classList.add('active');
+      document.getElementById(t.dataset.target).classList.add('active');
+    };
+    // View Transitions API with plain fallback
+    document.startViewTransition ? document.startViewTransition(swap) : swap();
   }));
 
   const colors = ['#ff4f9a', '#5b2a86', '#ffb800', '#4cc9f0', '#7ae582'];
@@ -185,7 +247,7 @@
     b.style.left = Math.random() * 100 + 'vw';
     b.style.background = pick();
     b.style.animationDuration = 9 + Math.random() * 7 + 's';
-    document.body.appendChild(b);
+    document.getElementById('sky').appendChild(b);
     setTimeout(() => b.remove(), 17000);
   }, 1500);
 
@@ -214,6 +276,65 @@
   })();
   document.getElementById('party').addEventListener('click', () => { burst(); setTimeout(() => burst(90), 350); });
   setTimeout(burst, 600); // confetti when the page opens
+
+  /* ---------- Midnight time-lock (Philippine Standard Time, UTC+8) ---------- */
+  // Change this date/time to move the unlock moment. Add ?preview to the URL to test.
+  const UNLOCK_AT = new Date('2026-10-02T00:00:00+08:00');
+  const locked = [...document.querySelectorAll('[data-lock]')];
+  const lockBox = document.getElementById('countdown');
+  const pad = n => String(n).padStart(2, '0');
+  function unlock(animate) {
+    lockBox.hidden = true;
+    locked.forEach(sec => { sec.hidden = false; if (animate) sec.classList.add('unveil'); });
+    if (animate) {
+      burst(220); setTimeout(() => burst(140), 500);
+      locked[0].scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+  let firstTick = true;
+  const timer = setInterval(tick, 1000);
+  function tick() {
+    const ms = UNLOCK_AT - Date.now();
+    if (ms <= 0 || location.search.includes('preview')) {
+      clearInterval(timer); unlock(!firstTick && ms <= 0); return;
+    }
+    firstTick = false;
+    const t = Math.floor(ms / 1000);
+    document.getElementById('cd-d').textContent = pad(Math.floor(t / 86400));
+    document.getElementById('cd-h').textContent = pad(Math.floor(t % 86400 / 3600));
+    document.getElementById('cd-m').textContent = pad(Math.floor(t % 3600 / 60));
+    document.getElementById('cd-s').textContent = pad(t % 60);
+  }
+  tick();
+
+  /* ---------- Tilt parallax (Device Orientation) ---------- */
+  const root = document.documentElement;
+  const clamp = (v, m) => Math.max(-m, Math.min(m, v));
+  function onTilt(e) {
+    const x = clamp(e.gamma || 0, 30), y = clamp((e.beta || 0) - 45, 30);
+    root.style.setProperty('--tx', (x * .6) + 'px');   root.style.setProperty('--ty', (y * .4) + 'px');
+    root.style.setProperty('--sx', (-x * 1.4) + 'px'); root.style.setProperty('--sy', (-y * .8) + 'px');
+  }
+  async function enableTilt() {
+    if (typeof DeviceOrientationEvent === 'undefined' || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    try {
+      // iOS asks permission, and only from a tap
+      if (typeof DeviceOrientationEvent.requestPermission === 'function' &&
+          await DeviceOrientationEvent.requestPermission() !== 'granted') return;
+      addEventListener('deviceorientation', onTilt);
+    } catch (err) {}
+  }
+  if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission !== 'function') enableTilt();
+  document.getElementById('party').addEventListener('click', enableTilt, { once: true });
+
+  /* ---------- Web Share ---------- */
+  document.getElementById('share').addEventListener('click', async e => {
+    const data = { title: 'Happy 23rd Birthday, Clarice! 🎂', text: 'A little birthday surprise 💖', url: location.href.split('?')[0] };
+    try {
+      if (navigator.share) await navigator.share(data);
+      else { await navigator.clipboard.writeText(data.url); e.target.textContent = '✅ Link copied!'; }
+    } catch (err) {}
+  });
 </script>
 </body>
 </html>
