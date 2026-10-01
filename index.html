@@ -10,12 +10,12 @@
 <style>
   /* ---------- Colors: edit here to restyle everything ---------- */
   :root {
-    --bg: #fff1f6;
-    --pink: #ff4f9a;
-    --plum: #5b2a86;
-    --gold: #ffb800;
-    --ink: #2a1838;
-    --paper: #ffffff;
+    --bg: oklch(97% .025 350);
+    --pink: oklch(66% .25 354);
+    --plum: oklch(38% .17 310);
+    --gold: oklch(83% .17 85);
+    --ink: oklch(24% .06 310);
+    --paper: oklch(100% 0 0);
   }
   * { box-sizing: border-box; margin: 0; }
   html { scroll-behavior: smooth; }
@@ -121,12 +121,49 @@
   }
   footer .btn { margin-top: 14px; }
 
+  /* ---------- Typography polish ---------- */
+  h1, h2 { text-wrap: balance; }
+  .sub, .msg p, .msg li, .hero p { text-wrap: pretty; }
+  .msg ul { padding: 0; list-style: none; }
+  .msg li { margin: 10px 0; padding-left: 2em; position: relative; }
+  .msg li::before { content: "💖"; position: absolute; left: 0; }
+
+  /* ---------- Scroll progress bar (pure CSS) ---------- */
+  #progress { position: fixed; inset: 0 0 auto 0; height: 5px; z-index: 20; background: linear-gradient(90deg, var(--pink), var(--gold)); transform-origin: left; scale: 0 1; }
+  @supports (animation-timeline: scroll()) {
+    #progress { animation: grow linear both; animation-timeline: scroll(root); }
+    @keyframes grow { to { scale: 1 1; } }
+  }
+
+  /* ---------- Make a wish: Popover + Anchor Positioning ---------- */
+  .wish-wrap { text-align: center; }
+  #wish { anchor-name: --wish; }
+  .wishtip {
+    margin: 0; border: 0; border-radius: 999px; padding: 10px 20px; font-weight: 700;
+    background: var(--gold); color: var(--ink); box-shadow: 0 8px 24px oklch(38% .17 310 / .3);
+    position-area: top; position-try-fallbacks: flip-block; margin-block: 12px;
+    opacity: 0; translate: 0 8px; transition: opacity .3s, translate .3s, display .3s allow-discrete, overlay .3s allow-discrete;
+  }
+  @supports (position-anchor: --wish) { .wishtip { position-anchor: --wish; inset: auto; } }
+  .wishtip:popover-open { opacity: 1; translate: 0 0; }
+  @starting-style { .wishtip:popover-open { opacity: 0; translate: 0 8px; } }
+
+  /* ---------- Unlock view transition (named elements) ---------- */
+  #countdown { view-transition-name: lock; }
+  #message { view-transition-name: msgsec; }
+  #photos { view-transition-name: photosec; }
+  ::view-transition-old(lock) { animation: vt-out .6s ease both; }
+  ::view-transition-new(msgsec), ::view-transition-new(photosec) { animation: vt-in .9s ease both; }
+  @keyframes vt-out { to { opacity: 0; scale: .9; filter: blur(10px); } }
+  @keyframes vt-in { from { opacity: 0; translate: 0 40px; filter: blur(10px); } }
+
   @media (prefers-reduced-motion: reduce) { .balloon { display: none; } .big { animation: none; } * { scroll-behavior: auto; } }
 </style>
 </head>
 <body>
 <canvas id="confetti"></canvas>
 <div id="sky"></div>
+<div id="progress"></div>
 
 <!-- ========== HERO ========== -->
 <section class="hero">
@@ -145,6 +182,10 @@
     camera-controls auto-rotate shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look">
     <button slot="ar-button" class="btn">🕶️ View in your room</button>
   </model-viewer>
+  <div class="wish-wrap">
+    <button class="btn" id="wish" popovertarget="wishpop">🕯️ Make a wish</button>
+    <div id="wishpop" popover class="wishtip">Wish granted ✨</div>
+  </div>
 </section>
 
 <!-- ========== COUNTDOWN LOCK ========== -->
@@ -167,6 +208,7 @@
     <div class="tabs" role="tablist">
       <button class="tab active" data-target="short">Short &amp; sweet</button>
       <button class="tab" data-target="long">Heartfelt</button>
+      <button class="tab" data-target="love">Things I love about you</button>
     </div>
 
     <!-- Option 1 -->
@@ -181,6 +223,18 @@
       <p>At 23, I hope this year opens the doors you've been dreaming about, fills your days with laughter, and surrounds you with people who love you as much as I do. Keep shining, keep being kind, and never lose the spark that makes you <em>you</em>.</p>
       <p>Thank you for being such a special part of my life. Here's to you, to us, and to all the memories still waiting to be made. 🥳</p>
       <p class="sign">Love you always, cousin! 💖</p>
+    </div>
+
+    <!-- Option 3: list (edit these to be more personal) -->
+    <div class="msg" id="love">
+      <ul>
+        <li>Your laugh, which fills up the whole room</li>
+        <li>The way you make everyone feel welcome</li>
+        <li>How you're always up for an adventure (or a snack run)</li>
+        <li>Your kindness, even when no one is watching</li>
+        <li>That you're my cousin <em>and</em> my friend</li>
+      </ul>
+      <p class="sign">Happy 23rd, Clarice! 🎉</p>
     </div>
   </div>
 </section>
@@ -237,7 +291,7 @@
     document.startViewTransition ? document.startViewTransition(swap) : swap();
   }));
 
-  const colors = ['#ff4f9a', '#5b2a86', '#ffb800', '#4cc9f0', '#7ae582'];
+  const colors = ['oklch(66% .25 354)', 'oklch(45% .2 300)', 'oklch(83% .17 85)', 'oklch(80% .14 220)', 'oklch(84% .2 150)'];
   const pick = () => colors[Math.floor(Math.random() * colors.length)];
 
   /* Floating balloons */
@@ -284,12 +338,12 @@
   const lockBox = document.getElementById('countdown');
   const pad = n => String(n).padStart(2, '0');
   function unlock(animate) {
-    lockBox.hidden = true;
-    locked.forEach(sec => { sec.hidden = false; if (animate) sec.classList.add('unveil'); });
-    if (animate) {
-      burst(220); setTimeout(() => burst(140), 500);
-      locked[0].scrollIntoView({ behavior: 'smooth' });
-    }
+    const open = () => { lockBox.hidden = true; locked.forEach(sec => sec.hidden = false); };
+    if (!animate) return open();
+    burst(220); setTimeout(() => burst(140), 500);
+    const done = () => locked[0].scrollIntoView({ behavior: 'smooth' });
+    if (document.startViewTransition) document.startViewTransition(open).finished.then(done);
+    else { open(); locked.forEach(sec => sec.classList.add('unveil')); done(); }
   }
   let firstTick = true;
   const timer = setInterval(tick, 1000);
@@ -326,6 +380,14 @@
   }
   if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission !== 'function') enableTilt();
   document.getElementById('party').addEventListener('click', enableTilt, { once: true });
+
+  /* ---------- Make a wish: haptics + big confetti (popover opens via popovertarget) ---------- */
+  const wishTip = document.getElementById('wishpop');
+  document.getElementById('wish').addEventListener('click', () => {
+    navigator.vibrate?.([50, 30, 50]);
+    burst(420); setTimeout(() => burst(260), 300);
+    setTimeout(() => { try { wishTip.hidePopover(); } catch (err) {} }, 2800);
+  });
 
   /* ---------- Web Share ---------- */
   document.getElementById('share').addEventListener('click', async e => {
