@@ -5,14 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Happy 23rd Birthday, Clarice! 🎂</title>
 
-<!-- ========== Link preview (Open Graph + Twitter Card) ==========
-     1. Replace YOUR_GITHUB_PAGES_LINK_HERE with your live link, e.g. https://username.github.io/repo/
-     2. og:image uses the Drive photo. If you upload photo1.jpg to your repo instead,
-        use the FULL address: https://username.github.io/repo/photo1.jpg (relative paths don't work for previews). -->
+<!-- ========== Link preview (Open Graph + Twitter Card) ========== -->
 <meta property="og:title" content="Happy 23rd Birthday, Clarice! 🎂">
 <meta property="og:description" content="A special birthday surprise for my favorite cousin! 🎉">
 <meta property="og:type" content="website">
-
 <meta property="og:url" content="https://githubbest729.github.io/clariceestanque/">
 <meta property="og:image" content="https://githubbest729.github.io/clariceestanque/photo1.jpg">
 
@@ -20,11 +16,13 @@
 <meta name="twitter:title" content="Happy 23rd Birthday, Clarice! 🎂">
 <meta name="twitter:description" content="A special birthday surprise for my favorite cousin! 🎉">
 <meta name="twitter:image" content="https://githubbest729.github.io/clariceestanque/photo1.jpg">
+
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎂</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
-  /* ---------- Colors: edit here to restyle everything ---------- */
+  /* ---------- Colors ---------- */
   :root {
     --bg: oklch(97% .025 350);
     --pink: oklch(66% .25 354);
@@ -92,56 +90,34 @@
   .songs b { display: block; font-size: 1.05rem; }
   .songs span { font-size: .92rem; opacity: .75; }
 
-<!-- ========== PHOTOS ========== -->
-<section id="photos" hidden data-lock>
-  <h2>Our memories 📸</h2>
-  <p class="sub">Tap a photo to open it in full</p>
-  <div class="photos">
-    <!-- Image 1 -->
-    <a class="photo" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1dM3lyB9O3Cam40ywlvPOPhC2MSc8hpyt/view?usp=sharing">
-      <div class="thumb">📷<img alt="Memory 1" src="photo1.jpg"></div>
-      <div class="cap">Memory #1</div>
-    </a>
-    <!-- Image 2 -->
-    <a class="photo" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1FOLwcwickaUpnL_UaSBiebWFli_D3lfV/view?usp=drive_link">
-      <div class="thumb">🌸<img alt="Memory 2" src="photo2.jpg"></div>
-      <div class="cap">Memory #2</div>
-    </a>
-    <!-- Image 3 -->
-    <a class="photo" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1gth9T0bwocXecKb6MbnKXSBXXH5xgYEm/view?usp=sharing">
-      <div class="thumb">💖<img alt="Memory 3" src="photo3.jpg"></div>
-      <div class="cap">Memory #3</div>
-    </a>
-  </div>
-  <div class="social"><a class="btn" target="_blank" rel="noopener" href="https://www.facebook.com/kylieeeejennerrr">💙 Visit Clarice on Facebook</a></div>
-</section>
+  /* ---------- Photos ---------- */
+  .photos { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+  .photo { background: var(--paper); border-radius: 6px; padding: 10px 10px 14px; text-decoration: none; color: inherit; box-shadow: 0 6px 18px rgba(91,42,134,.18); transition: transform .25s; }
+  .photo:nth-child(odd) { transform: rotate(-1.5deg); }
+  .photo:nth-child(even) { transform: rotate(1.5deg); }
+  .photo:hover { transform: rotate(0) scale(1.03); }
+  .thumb { aspect-ratio: 4/5; position: relative; display: grid; place-items: center; font-size: 3rem; background: linear-gradient(135deg, var(--pink), var(--plum)); color: #fff; overflow: hidden; }
+  .thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .cap { text-align: center; margin-top: 10px; font-weight: 700; }
+  .social { text-align: center; margin-top: 10px; }
 
   footer { text-align: center; padding: 30px 20px 50px; position: relative; z-index: 1; opacity: .8; }
   canvas { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
-
-  /* ---------- Countdown lock ---------- */
-  .lock { text-align: center; }
-  .clock { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-  .clock div { background: var(--plum); color: #fff; border-radius: 16px; min-width: 76px; padding: 12px 8px; }
-  .clock b { display: block; font: 600 2.2rem "Fraunces", serif; font-variant-numeric: tabular-nums; }
-  .clock span { font-size: .78rem; opacity: .8; }
-  .unveil { animation: unveil 1.3s ease both; }
-  @keyframes unveil { from { opacity: 0; filter: blur(14px); translate: 0 40px; } }
 
   /* ---------- 3D cake ---------- */
   model-viewer { width: 100%; height: 380px; --poster-color: transparent; background: transparent; }
   .cake { text-align: center; }
 
-  /* ---------- Tilt parallax (Device Orientation sets --tx/--ty/--sx/--sy) ---------- */
+  /* ---------- Tilt parallax ---------- */
   .big { translate: var(--tx, 0px) var(--ty, 0px); transition: translate .12s linear; }
   #sky { position: fixed; inset: 0; z-index: 0; pointer-events: none; translate: var(--sx, 0px) var(--sy, 0px); transition: translate .12s linear; }
   #sky .balloon { position: absolute; }
 
-  /* ---------- View Transitions: message tab morph ---------- */
+  /* ---------- View Transitions ---------- */
   .letter { view-transition-name: letter; }
   ::view-transition-group(letter) { animation-duration: .45s; }
 
-  /* ---------- Scroll-driven reveal (no JS) ---------- */
+  /* ---------- Scroll-driven reveal ---------- */
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
       .songs li, .photo { animation: slidein linear both; animation-timeline: view(); animation-range: entry 0% cover 28%; }
@@ -157,14 +133,14 @@
   .msg li { margin: 10px 0; padding-left: 2em; position: relative; }
   .msg li::before { content: "💖"; position: absolute; left: 0; }
 
-  /* ---------- Scroll progress bar (pure CSS) ---------- */
+  /* ---------- Scroll progress bar ---------- */
   #progress { position: fixed; inset: 0 0 auto 0; height: 5px; z-index: 20; background: linear-gradient(90deg, var(--pink), var(--gold)); transform-origin: left; scale: 0 1; }
   @supports (animation-timeline: scroll()) {
     #progress { animation: grow linear both; animation-timeline: scroll(root); }
     @keyframes grow { to { scale: 1 1; } }
   }
 
-  /* ---------- Make a wish: Popover + Anchor Positioning ---------- */
+  /* ---------- Make a wish ---------- */
   .wish-wrap { text-align: center; }
   #wish { anchor-name: --wish; }
   .wishtip {
@@ -176,15 +152,6 @@
   @supports (position-anchor: --wish) { .wishtip { position-anchor: --wish; inset: auto; } }
   .wishtip:popover-open { opacity: 1; translate: 0 0; }
   @starting-style { .wishtip:popover-open { opacity: 0; translate: 0 8px; } }
-
-  /* ---------- Unlock view transition (named elements) ---------- */
-  #countdown { view-transition-name: lock; }
-  #message { view-transition-name: msgsec; }
-  #photos { view-transition-name: photosec; }
-  ::view-transition-old(lock) { animation: vt-out .6s ease both; }
-  ::view-transition-new(msgsec), ::view-transition-new(photosec) { animation: vt-in .9s ease both; }
-  @keyframes vt-out { to { opacity: 0; scale: .9; filter: blur(10px); } }
-  @keyframes vt-in { from { opacity: 0; translate: 0 40px; filter: blur(10px); } }
 
   @media (prefers-reduced-motion: reduce) { .balloon { display: none; } .big { animation: none; } * { scroll-behavior: auto; } }
 </style>
@@ -202,37 +169,23 @@
   <button class="btn" id="party">🎉 Tap to celebrate</button>
 </section>
 
-<!-- ========== 3D CAKE (swap CAKE model src for your own .glb) ========== -->
+<!-- ========== 3D CAKE ========== -->
 <section class="cake">
   <h2>Your birthday cake 🎂</h2>
   <p class="sub">Spin it with your finger, or tap the button to see it in your room</p>
-  <!-- PLACEHOLDER MODEL: replace src with your own cake, e.g. src="cake.glb" uploaded next to index.html -->
- <model-viewer src="https://modelviewer.dev/shared-assets/models/Astronaut.glb" alt="3D birthday cake"
-  camera-controls auto-rotate shadow-intensity="1" ar ar-modes="webxr quick-look scene-viewer"
-  ar-status="not-presenting">
-  <button slot="ar-button" class="btn">🕶️ View in your room</button>
-  <div id="ar-prompt"></div>
-</model-viewer>
+  <model-viewer src="https://modelviewer.dev/shared-assets/models/Astronaut.glb" alt="3D birthday cake"
+    camera-controls auto-rotate shadow-intensity="1" ar ar-modes="webxr quick-look scene-viewer" ar-status="not-presenting">
+    <button slot="ar-button" class="btn">🕶️ View in your room</button>
+    <div id="ar-prompt"></div>
+  </model-viewer>
   <div class="wish-wrap">
     <button class="btn" id="wish" popovertarget="wishpop">🕯️ Make a wish</button>
     <div id="wishpop" popover class="wishtip">Wish granted ✨</div>
   </div>
 </section>
 
-<!-- ========== COUNTDOWN LOCK ========== -->
-<section class="lock" id="countdown">
-  <h2>Something special unlocks at midnight 🔒</h2>
-  <p class="sub">Philippine Standard Time</p>
-  <div class="clock">
-    <div><b id="cd-d">00</b><span>days</span></div>
-    <div><b id="cd-h">00</b><span>hours</span></div>
-    <div><b id="cd-m">00</b><span>minutes</span></div>
-    <div><b id="cd-s">00</b><span>seconds</span></div>
-  </div>
-</section>
-
 <!-- ========== MESSAGES ========== -->
-<section id="message" hidden data-lock>
+<section id="message">
   <h2>A message for you 💌</h2>
   <p class="sub">Pick the one that fits your heart</p>
   <div class="letter">
@@ -256,7 +209,7 @@
       <p class="sign">Love you always, cousin! 💖</p>
     </div>
 
-    <!-- Option 3: list (edit these to be more personal) -->
+    <!-- Option 3 -->
     <div class="msg" id="love">
       <ul>
         <li>Your laugh, which fills up the whole room</li>
@@ -284,24 +237,23 @@
 </section>
 
 <!-- ========== PHOTOS ========== -->
-<!-- ========== PHOTOS ========== -->
-<section id="photos" hidden data-lock>
+<section id="photos">
   <h2>Our memories 📸</h2>
   <p class="sub">Tap a photo to open it in full</p>
   <div class="photos">
     <!-- Image 1 -->
     <a class="photo" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1dM3lyB9O3Cam40ywlvPOPhC2MSc8hpyt/view?usp=sharing">
-      <div class="thumb">📷<img alt="Memory 1" src="photo1.jpg" onerror="this.remove()"></div>
+      <div class="thumb">📷<img alt="Memory 1" src="photo1.jpg"></div>
       <div class="cap">Memory #1</div>
     </a>
     <!-- Image 2 -->
     <a class="photo" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1FOLwcwickaUpnL_UaSBiebWFli_D3lfV/view?usp=drive_link">
-      <div class="thumb">🌸<img alt="Memory 2" src="photo2.jpg" onerror="this.remove()"></div>
+      <div class="thumb">🌸<img alt="Memory 2" src="photo2.jpg"></div>
       <div class="cap">Memory #2</div>
     </a>
     <!-- Image 3 -->
     <a class="photo" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1gth9T0bwocXecKb6MbnKXSBXXH5xgYEm/view?usp=sharing">
-      <div class="thumb">💖<img alt="Memory 3" src="photo3.jpg" onerror="this.remove()"></div>
+      <div class="thumb">💖<img alt="Memory 3" src="photo3.jpg"></div>
       <div class="cap">Memory #3</div>
     </a>
   </div>
@@ -311,6 +263,7 @@
 <footer>Made with love for my favorite cousin 💕<br>
   <button class="btn" id="share">🎁 Share my birthday</button>
 </footer>
+
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 
 <script>
@@ -321,7 +274,6 @@
       t.classList.add('active');
       document.getElementById(t.dataset.target).classList.add('active');
     };
-    // View Transitions API with plain fallback
     document.startViewTransition ? document.startViewTransition(swap) : swap();
   }));
 
@@ -363,39 +315,9 @@
     requestAnimationFrame(loop);
   })();
   document.getElementById('party').addEventListener('click', () => { burst(); setTimeout(() => burst(90), 350); });
-  setTimeout(burst, 600); // confetti when the page opens
+  setTimeout(burst, 600);
 
-  /* ---------- Midnight time-lock (Philippine Standard Time, UTC+8) ---------- */
-  // Change this date/time to move the unlock moment. Add ?preview to the URL to test.
-  const UNLOCK_AT = new Date('2026-10-02T00:00:00+08:00');
-  const locked = [...document.querySelectorAll('[data-lock]')];
-  const lockBox = document.getElementById('countdown');
-  const pad = n => String(n).padStart(2, '0');
-  function unlock(animate) {
-    const open = () => { lockBox.hidden = true; locked.forEach(sec => sec.hidden = false); };
-    if (!animate) return open();
-    burst(220); setTimeout(() => burst(140), 500);
-    const done = () => locked[0].scrollIntoView({ behavior: 'smooth' });
-    if (document.startViewTransition) document.startViewTransition(open).finished.then(done);
-    else { open(); locked.forEach(sec => sec.classList.add('unveil')); done(); }
-  }
-  let firstTick = true;
-  const timer = setInterval(tick, 1000);
-  function tick() {
-    const ms = UNLOCK_AT - Date.now();
-    if (ms <= 0 || location.search.includes('preview')) {
-      clearInterval(timer); unlock(!firstTick && ms <= 0); return;
-    }
-    firstTick = false;
-    const t = Math.floor(ms / 1000);
-    document.getElementById('cd-d').textContent = pad(Math.floor(t / 86400));
-    document.getElementById('cd-h').textContent = pad(Math.floor(t % 86400 / 3600));
-    document.getElementById('cd-m').textContent = pad(Math.floor(t % 3600 / 60));
-    document.getElementById('cd-s').textContent = pad(t % 60);
-  }
-  tick();
-
-  /* ---------- Tilt parallax (Device Orientation) ---------- */
+  /* Tilt parallax */
   const root = document.documentElement;
   const clamp = (v, m) => Math.max(-m, Math.min(m, v));
   function onTilt(e) {
@@ -406,7 +328,6 @@
   async function enableTilt() {
     if (typeof DeviceOrientationEvent === 'undefined' || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     try {
-      // iOS asks permission, and only from a tap
       if (typeof DeviceOrientationEvent.requestPermission === 'function' &&
           await DeviceOrientationEvent.requestPermission() !== 'granted') return;
       addEventListener('deviceorientation', onTilt);
@@ -415,7 +336,7 @@
   if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission !== 'function') enableTilt();
   document.getElementById('party').addEventListener('click', enableTilt, { once: true });
 
-  /* ---------- Make a wish: haptics + big confetti (popover opens via popovertarget) ---------- */
+  /* Make a wish */
   const wishTip = document.getElementById('wishpop');
   document.getElementById('wish').addEventListener('click', () => {
     navigator.vibrate?.([50, 30, 50]);
@@ -423,7 +344,7 @@
     setTimeout(() => { try { wishTip.hidePopover(); } catch (err) {} }, 2800);
   });
 
-  /* ---------- Web Share ---------- */
+  /* Web Share */
   document.getElementById('share').addEventListener('click', async e => {
     const data = { title: 'Happy 23rd Birthday, Clarice! 🎂', text: 'A little birthday surprise 💖', url: location.href.split('?')[0] };
     try {
