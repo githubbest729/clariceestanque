@@ -207,9 +207,11 @@
   <h2>Your birthday cake 🎂</h2>
   <p class="sub">Spin it with your finger, or tap the button to see it in your room</p>
   <!-- PLACEHOLDER MODEL: replace src with your own cake, e.g. src="cake.glb" uploaded next to index.html -->
-  <model-viewer src="https://modelviewer.dev/shared-assets/models/Astronaut.glb" alt="3D birthday cake"
-  camera-controls auto-rotate shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look">
+ <model-viewer src="https://modelviewer.dev/shared-assets/models/Astronaut.glb" alt="3D birthday cake"
+  camera-controls auto-rotate shadow-intensity="1" ar ar-modes="webxr quick-look scene-viewer"
+  ar-status="not-presenting">
   <button slot="ar-button" class="btn">🕶️ View in your room</button>
+  <div id="ar-prompt"></div>
 </model-viewer>
   <div class="wish-wrap">
     <button class="btn" id="wish" popovertarget="wishpop">🕯️ Make a wish</button>
