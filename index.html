@@ -22,57 +22,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-
+  /* ---------- Floating Music Button ---------- */
   .music-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 100;
-  padding: 10px 18px;
-  border-radius: 999px;
-  border: none;
-  background: var(--plum);
-  color: #fff;
-  font: 700 0.95rem "Nunito", sans-serif;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-  cursor: pointer;
-  transition: transform 0.2s, background 0.2s;
-}
-.music-btn:hover {
-  transform: scale(1.08);
-  background: var(--pink);
-}
-
-  const audio = document.getElementById('bg-music');
-const musicBtn = document.getElementById('music-toggle');
-let isPlaying = false;
-
-function startMusic() {
-  if (!isPlaying) {
-    audio.play().then(() => {
-      isPlaying = true;
-      musicBtn.textContent = '🔊 Pause Music';
-    }).catch(err => console.log('Autoplay blocked:', err));
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: none;
+    background: var(--plum);
+    color: #fff;
+    font: 700 0.95rem "Nunito", sans-serif;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
   }
-}
-
-// Play music on first tap anywhere on the page or when clicking the party button
-document.addEventListener('click', startMusic, { once: true });
-
-// Toggle audio play/pause
-musicBtn.addEventListener('click', (e) => {
-  e.stopPropagation(); // prevent triggering document click twice
-  if (isPlaying) {
-    audio.pause();
-    isPlaying = false;
-    musicBtn.textContent = '🎵 Play Music';
-  } else {
-    audio.play();
-    isPlaying = true;
-    musicBtn.textContent = '🔊 Pause Music';
+  .music-btn:hover {
+    transform: scale(1.08);
+    background: var(--pink);
   }
-});
-  
+
   /* ---------- Colors ---------- */
   :root {
     --bg: oklch(97% .025 350);
@@ -94,14 +64,6 @@ musicBtn.addEventListener('click', (e) => {
   h2 { font-size: 2rem; color: var(--plum); text-align: center; }
   .sub { text-align: center; margin: 4px 0 28px; opacity: .75; }
 
-  <!-- Background Music -->
-<audio id="bg-music" loop preload="auto">
-  <source src="birthday-song.mp3" type="audio/mpeg">
-</audio>
-
-<!-- Floating Music Button -->
-<button id="music-toggle" class="music-btn">🎵 Play Music</button>
-  
   /* ---------- Hero ---------- */
   .hero { text-align: center; padding-top: 70px; }
   .big {
@@ -220,7 +182,13 @@ musicBtn.addEventListener('click', (e) => {
 <div id="sky"></div>
 <div id="progress"></div>
 
-  
+<!-- Background Music Element -->
+<audio id="bg-music" loop preload="auto">
+  <source src="birthday-song.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Floating Music Toggle Button -->
+<button id="music-toggle" class="music-btn">🎵 Play Music</button>
 
 <!-- ========== HERO ========== -->
 <section class="hero">
@@ -236,7 +204,7 @@ musicBtn.addEventListener('click', (e) => {
   <p class="sub">Spin it with your finger, or tap the button to see it in your room</p>
   <model-viewer src="https://modelviewer.dev/shared-assets/models/Astronaut.glb" alt="3D birthday cake"
     camera-controls auto-rotate shadow-intensity="1" ar ar-modes="webxr quick-look scene-viewer" ar-status="not-presenting">
-    <button slot="ar-button" class="btn">🕶️ View in your room</button>
+    <button slot="ar-button" class="btn">🕶️️ View in your room</button>
     <div id="ar-prompt"></div>
   </model-viewer>
   <div class="wish-wrap">
@@ -328,6 +296,37 @@ musicBtn.addEventListener('click', (e) => {
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 
 <script>
+  /* ---------- Music Player Control ---------- */
+  const audio = document.getElementById('bg-music');
+  const musicBtn = document.getElementById('music-toggle');
+  let isPlaying = false;
+
+  function startMusic() {
+    if (!isPlaying) {
+      audio.play().then(() => {
+        isPlaying = true;
+        musicBtn.textContent = '🔊 Pause Music';
+      }).catch(err => console.log('Autoplay blocked:', err));
+    }
+  }
+
+  // Play music on first tap anywhere on the page
+  document.addEventListener('click', startMusic, { once: true });
+
+  // Toggle audio play/pause
+  musicBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (isPlaying) {
+      audio.pause();
+      isPlaying = false;
+      musicBtn.textContent = '🎵 Play Music';
+    } else {
+      audio.play();
+      isPlaying = true;
+      musicBtn.textContent = '🔊 Pause Music';
+    }
+  });
+
   /* Message tabs */
   document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
     const swap = () => {
