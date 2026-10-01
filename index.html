@@ -3,239 +3,217 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Happy 23rd Birthday, Clarice! 🎉</title>
+<title>Happy 23rd Birthday, Clarice! 🎂</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎂</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  /* ---------- Theme colors (edit these to restyle everything) ---------- */
+  /* ---------- Colors: edit here to restyle everything ---------- */
   :root {
-    --pink: #ff5fa2;
-    --purple: #8a5cf6;
-    --gold: #ffc94d;
-    --ink: #2b2140;
-    --card: rgba(255,255,255,.85);
+    --bg: #fff1f6;
+    --pink: #ff4f9a;
+    --plum: #5b2a86;
+    --gold: #ffb800;
+    --ink: #2a1838;
+    --paper: #ffffff;
   }
   * { box-sizing: border-box; margin: 0; }
   html { scroll-behavior: smooth; }
   body {
-    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-    color: var(--ink);
-    background: linear-gradient(135deg, #ffe3f1, #e8dcff 50%, #dff3ff);
-    background-attachment: fixed;
-    line-height: 1.7;
-    overflow-x: hidden;
+    font-family: "Nunito", system-ui, sans-serif;
+    color: var(--ink); background: var(--bg);
+    line-height: 1.7; overflow-x: hidden;
   }
-  section { max-width: 920px; margin: 0 auto; padding: 56px 20px; }
-  h1, h2 { font-family: Georgia, "Times New Roman", serif; }
-  h2 { text-align: center; font-size: 2rem; margin-bottom: 8px; }
-  .sub { text-align: center; opacity: .7; margin-bottom: 28px; }
+  h1, h2, .big { font-family: "Fraunces", Georgia, serif; }
+  section { max-width: 900px; margin: 0 auto; padding: 56px 20px; position: relative; z-index: 1; }
+  h2 { font-size: 2rem; color: var(--plum); text-align: center; }
+  .sub { text-align: center; margin: 4px 0 28px; opacity: .75; }
 
   /* ---------- Hero ---------- */
-  .hero { text-align: center; padding-top: 80px; position: relative; }
-  .big23 {
-    font-size: clamp(6rem, 24vw, 11rem); font-weight: 800; line-height: 1;
-    background: linear-gradient(135deg, var(--pink), var(--purple), var(--gold));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    animation: pop 1.2s cubic-bezier(.2,1.6,.4,1) both;
+  .hero { text-align: center; padding-top: 70px; }
+  .big {
+    font-size: clamp(8rem, 34vw, 15rem); line-height: .9; font-weight: 600;
+    color: var(--pink); text-shadow: 6px 6px 0 var(--gold);
+    animation: pop 1s cubic-bezier(.2,1.6,.4,1) both;
   }
-  .hero h1 { font-size: clamp(1.8rem, 6vw, 3rem); margin-top: 6px; }
-  .hero p { margin-top: 10px; font-size: 1.15rem; }
-  @keyframes pop { from { transform: scale(.2) rotate(-12deg); opacity: 0; } }
-
+  @keyframes pop { from { transform: scale(.3) rotate(-10deg); opacity: 0; } }
+  .hero h1 { font-size: clamp(1.7rem, 6vw, 2.8rem); color: var(--plum); margin-top: 14px; }
+  .hero p { margin-top: 8px; font-size: 1.15rem; }
   .btn {
-    display: inline-block; margin-top: 26px; padding: 14px 30px; border: 0; border-radius: 999px;
-    font-size: 1.05rem; font-weight: 600; color: #fff; cursor: pointer; text-decoration: none;
-    background: linear-gradient(135deg, var(--pink), var(--purple));
-    box-shadow: 0 8px 22px rgba(138,92,246,.35); transition: transform .2s;
+    display: inline-block; margin-top: 24px; padding: 14px 30px; border: 0; border-radius: 999px;
+    font: 700 1.05rem "Nunito", sans-serif; color: #fff; background: var(--plum);
+    cursor: pointer; text-decoration: none; transition: transform .2s, background .2s;
   }
-  .btn:hover { transform: translateY(-3px) scale(1.04); }
+  .btn:hover { transform: scale(1.05); background: var(--pink); }
+  .btn:focus-visible, .tab:focus-visible, a:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 
-  /* ---------- Floating balloons ---------- */
+  /* ---------- Balloons ---------- */
   .balloon {
-    position: fixed; bottom: -120px; width: 46px; height: 58px; border-radius: 50% 50% 48% 48%;
-    opacity: .75; z-index: 0; animation: rise linear forwards; pointer-events: none;
+    position: fixed; bottom: -120px; width: 44px; height: 56px; border-radius: 50% 50% 48% 48%;
+    opacity: .6; z-index: 0; pointer-events: none; animation: rise linear forwards;
   }
-  .balloon::after { content: ""; position: absolute; left: 50%; top: 100%; width: 1px; height: 40px; background: rgba(0,0,0,.25); }
-  @keyframes rise { to { transform: translateY(-120vh) translateX(30px); } }
-  section, footer { position: relative; z-index: 1; }
+  .balloon::after { content: ""; position: absolute; left: 50%; top: 100%; width: 1px; height: 36px; background: rgba(0,0,0,.25); }
+  @keyframes rise { to { transform: translateY(-125vh) translateX(26px); } }
 
-  /* ---------- Cards & message tabs ---------- */
-  .card { background: var(--card); backdrop-filter: blur(8px); border-radius: 22px; padding: 30px; box-shadow: 0 10px 30px rgba(43,33,64,.12); }
+  /* ---------- Messages ---------- */
+  .letter { background: var(--paper); border-radius: 18px; padding: 30px; box-shadow: 0 6px 0 var(--gold); }
   .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-  .tab { padding: 10px 22px; border-radius: 999px; border: 2px solid var(--purple); background: transparent; color: var(--purple); font-weight: 600; cursor: pointer; }
-  .tab.active { background: var(--purple); color: #fff; }
-  .msg { display: none; font-size: 1.1rem; }
-  .msg.active { display: block; animation: fade .6s ease; }
+  .tab { padding: 9px 22px; border-radius: 999px; border: 2px solid var(--plum); background: none; color: var(--plum); font: 700 1rem "Nunito", sans-serif; cursor: pointer; }
+  .tab.active { background: var(--plum); color: #fff; }
+  .msg { display: none; font-size: 1.1rem; max-width: 62ch; margin: 0 auto; }
+  .msg.active { display: block; }
   .msg p + p { margin-top: 14px; }
-  .sign { margin-top: 18px; font-style: italic; font-weight: 600; }
-  @keyframes fade { from { opacity: 0; transform: translateY(10px); } }
+  .sign { font-family: "Fraunces", serif; font-style: italic; font-size: 1.3rem; color: var(--pink); }
 
   /* ---------- Songs ---------- */
-  .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-  .song { display: block; text-decoration: none; color: inherit; transition: transform .25s; }
-  .song:hover { transform: translateY(-6px) rotate(-1deg); }
-  .song .emoji { font-size: 2rem; }
-  .song h3 { margin: 6px 0 2px; }
-  .song small { opacity: .7; }
-  .song .vibe { display: block; margin-top: 8px; font-size: .95rem; }
+  .songs { list-style: none; padding: 0; display: grid; gap: 12px; }
+  .songs a {
+    display: flex; align-items: center; gap: 16px; padding: 14px 18px; border-radius: 14px;
+    background: var(--paper); color: inherit; text-decoration: none; transition: transform .2s, box-shadow .2s;
+  }
+  .songs a:hover { transform: translateX(6px); box-shadow: -6px 0 0 var(--pink); }
+  .songs .e { font-size: 1.8rem; }
+  .songs b { display: block; font-size: 1.05rem; }
+  .songs span { font-size: .92rem; opacity: .75; }
 
   /* ---------- Photos ---------- */
-  .photo { padding: 0; overflow: hidden; text-decoration: none; color: inherit; transition: transform .25s; }
-  .photo:hover { transform: scale(1.03); }
-  .thumb { aspect-ratio: 4/5; background: linear-gradient(135deg, var(--pink), var(--purple)); display: grid; place-items: center; color: #fff; font-size: 3rem; position: relative; }
+  .photos { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+  .photo { background: var(--paper); border-radius: 6px; padding: 10px 10px 14px; text-decoration: none; color: inherit; box-shadow: 0 6px 18px rgba(91,42,134,.18); transition: transform .25s; }
+  .photo:nth-child(odd) { transform: rotate(-1.5deg); }
+  .photo:nth-child(even) { transform: rotate(1.5deg); }
+  .photo:hover { transform: rotate(0) scale(1.03); }
+  .thumb { aspect-ratio: 4/5; position: relative; display: grid; place-items: center; font-size: 3rem; background: linear-gradient(135deg, var(--pink), var(--plum)); color: #fff; overflow: hidden; }
   .thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .photo .cap { padding: 14px 18px; font-weight: 600; text-align: center; }
-  .social { text-align: center; margin-top: 28px; }
+  .cap { text-align: center; margin-top: 10px; font-weight: 700; }
+  .social { text-align: center; margin-top: 10px; }
 
-  footer { text-align: center; padding: 30px 20px 50px; opacity: .8; }
-  canvas#confetti { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
+  footer { text-align: center; padding: 30px 20px 50px; position: relative; z-index: 1; opacity: .8; }
+  canvas { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
+
+  @media (prefers-reduced-motion: reduce) { .balloon { display: none; } .big { animation: none; } * { scroll-behavior: auto; } }
 </style>
 </head>
 <body>
-
 <canvas id="confetti"></canvas>
 
-<!-- ============ HERO ============ -->
+<!-- ========== HERO ========== -->
 <section class="hero">
-  <div class="big23">23</div>
+  <div class="big">23</div>
   <h1>Happy Birthday, Clarice Estanque! 🎂</h1>
   <p>Today is your day, cousin. Let's celebrate you! 💖</p>
-  <button class="btn" id="party">🎉 Tap to celebrate!</button>
+  <button class="btn" id="party">🎉 Tap to celebrate</button>
 </section>
 
-<!-- ============ MESSAGES ============ -->
+<!-- ========== MESSAGES ========== -->
 <section id="message">
-  <h2>A Message For You 💌</h2>
-  <p class="sub">Pick the one that hits your heart</p>
-  <div class="card">
-    <div class="tabs">
-      <button class="tab active" data-target="short">Short &amp; Sweet</button>
+  <h2>A message for you 💌</h2>
+  <p class="sub">Pick the one that fits your heart</p>
+  <div class="letter">
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-target="short">Short &amp; sweet</button>
       <button class="tab" data-target="long">Heartfelt</button>
     </div>
 
-    <!-- Option 1: short -->
+    <!-- Option 1 -->
     <div class="msg active" id="short">
-      <p>Happy 23rd birthday, Clarice! 🎉💖 You're not just my cousin, you're one of my favorite people. Thank you for all the laughs and memories, and for always being you. I hope this year brings you everything you deserve and more. Love you lots! 🎂✨</p>
+      <p>Happy 23rd birthday, Clarice! 🎉💖 You're not just my cousin, you're one of my favorite people. Thank you for all the laughs and memories, and for always being you. I hope this year brings you everything you deserve and more.</p>
+      <p class="sign">Love you lots! 🎂✨</p>
     </div>
 
-    <!-- Option 2: detailed -->
+    <!-- Option 2 -->
     <div class="msg" id="long">
-      <p>Today is all about you, and I couldn't be happier to celebrate you. Being cousins means we got lucky enough to be family <em>and</em> friends, and I'm so grateful for that bond. You've been there through the good times, the silly times, and everything in between, and you always make life brighter just by being in it.</p>
-      <p>At 23, I hope this year opens doors you've been dreaming about, fills your days with laughter, and surrounds you with people who love you as much as I do. Keep shining, keep being kind, and never lose that spark that makes you <em>you</em>.</p>
+      <p>Today is all about you, and I couldn't be happier to celebrate you. Being cousins means we got lucky enough to be family <em>and</em> friends, and I'm so grateful for that bond. You've been there through the good times, the silly times, and everything in between.</p>
+      <p>At 23, I hope this year opens the doors you've been dreaming about, fills your days with laughter, and surrounds you with people who love you as much as I do. Keep shining, keep being kind, and never lose the spark that makes you <em>you</em>.</p>
       <p>Thank you for being such a special part of my life. Here's to you, to us, and to all the memories still waiting to be made. 🥳</p>
-      <p class="sign">Love you always, cousin! 💖✨</p>
+      <p class="sign">Love you always, cousin! 💖</p>
     </div>
   </div>
 </section>
 
-<!-- ============ SONGS ============ -->
+<!-- ========== SONGS ========== -->
 <section id="songs">
-  <h2>Your Birthday Playlist 🎶</h2>
-  <p class="sub">Tap a song to listen on YouTube</p>
-  <div class="grid">
-    <a class="card song" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Katy+Perry+Birthday">
-      <span class="emoji">🎈</span><h3>Birthday</h3><small>Katy Perry</small>
-      <span class="vibe">Bright, fun, and made for a party.</span>
-    </a>
-    <a class="card song" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Pharrell+Williams+Happy">
-      <span class="emoji">☀️</span><h3>Happy</h3><small>Pharrell Williams</small>
-      <span class="vibe">An instant mood-lifter for any moment.</span>
-    </a>
-    <a class="card song" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Taylor+Swift+22">
-      <span class="emoji">✨</span><h3>22</h3><small>Taylor Swift</small>
-      <span class="vibe">A playful nod to a brand-new chapter.</span>
-    </a>
-    <a class="card song" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Lizzo+Good+as+Hell">
-      <span class="emoji">👑</span><h3>Good as Hell</h3><small>Lizzo</small>
-      <span class="vibe">Confident, empowering, glow-up energy.</span>
-    </a>
-    <a class="card song" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=American+Authors+Best+Day+of+My+Life">
-      <span class="emoji">🌈</span><h3>Best Day of My Life</h3><small>American Authors</small>
-      <span class="vibe">Uplifting and sentimental. Perfect for memories.</span>
-    </a>
-  </div>
+  <h2>Your birthday playlist 🎶</h2>
+  <p class="sub">Tap a song to find it on YouTube</p>
+  <ul class="songs">
+    <li><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Katy+Perry+Birthday"><span class="e">🎈</span><div><b>Birthday, Katy Perry</b><span>Bright and made for a party.</span></div></a></li>
+    <li><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Pharrell+Williams+Happy"><span class="e">☀️</span><div><b>Happy, Pharrell Williams</b><span>An instant mood-lifter.</span></div></a></li>
+    <li><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Taylor+Swift+22"><span class="e">✨</span><div><b>22, Taylor Swift</b><span>A playful nod to a brand-new chapter.</span></div></a></li>
+    <li><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Lizzo+Good+as+Hell"><span class="e">👑</span><div><b>Good as Hell, Lizzo</b><span>Confident, glowing, unstoppable.</span></div></a></li>
+    <li><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=American+Authors+Best+Day+of+My+Life"><span class="e">🌈</span><div><b>Best Day of My Life, American Authors</b><span>Uplifting and sentimental.</span></div></a></li>
+  </ul>
 </section>
 
-<!-- ============ PHOTOS ============ -->
+<!-- ========== PHOTOS ========== -->
 <section id="photos">
-  <h2>Our Memories 📸</h2>
-  <p class="sub">Tap a photo to open the full picture</p>
-  <div class="grid">
-    <!-- To make previews appear, set each Drive file to "Anyone with the link".
-         If a preview can't load, the pink placeholder shows instead. -->
-    <a class="card photo" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1dM3lyB9O3Cam40ywlvPOPhC2MSc8hpyt/view?usp=sharing">
-      <div class="thumb">📷<img alt="Photo 1" src="https://drive.google.com/thumbnail?id=1dM3lyB9O3Cam40ywlvPOPhC2MSc8hpyt&sz=w800" onerror="this.remove()"></div>
+  <h2>Our memories 📸</h2>
+  <p class="sub">Tap a photo to open it in full</p>
+  <!-- Set each Drive file to "Anyone with the link" so previews show. Otherwise the colored placeholder appears. -->
+  <div class="photos">
+    <a class="photo" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1dM3lyB9O3Cam40ywlvPOPhC2MSc8hpyt/view?usp=sharing">
+      <div class="thumb">📷<img alt="Memory 1" src="https://drive.google.com/thumbnail?id=1dM3lyB9O3Cam40ywlvPOPhC2MSc8hpyt&sz=w800" onerror="this.remove()"></div>
       <div class="cap">Memory #1</div>
     </a>
-    <a class="card photo" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1FOLwcwickaUpnL_UaSBiebWFli_D3lfV/view?usp=drive_link">
-      <div class="thumb">🌸<img alt="Photo 2" src="https://drive.google.com/thumbnail?id=1FOLwcwickaUpnL_UaSBiebWFli_D3lfV&sz=w800" onerror="this.remove()"></div>
+    <a class="photo" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1FOLwcwickaUpnL_UaSBiebWFli_D3lfV/view?usp=drive_link">
+      <div class="thumb">🌸<img alt="Memory 2" src="https://drive.google.com/thumbnail?id=1FOLwcwickaUpnL_UaSBiebWFli_D3lfV&sz=w800" onerror="this.remove()"></div>
       <div class="cap">Memory #2</div>
     </a>
-    <a class="card photo" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1gth9T0bwocXecKb6MbnKXSBXXH5xgYEm/view?usp=sharing">
-      <div class="thumb">💖<img alt="Photo 3" src="https://drive.google.com/thumbnail?id=1gth9T0bwocXecKb6MbnKXSBXXH5xgYEm&sz=w800" onerror="this.remove()"></div>
+    <a class="photo" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1gth9T0bwocXecKb6MbnKXSBXXH5xgYEm/view?usp=sharing">
+      <div class="thumb">💖<img alt="Memory 3" src="https://drive.google.com/thumbnail?id=1gth9T0bwocXecKb6MbnKXSBXXH5xgYEm&sz=w800" onerror="this.remove()"></div>
       <div class="cap">Memory #3</div>
     </a>
   </div>
-  <div class="social">
-    <a class="btn" target="_blank" rel="noopener" href="https://www.facebook.com/kylieeeejennerrr">💙 Visit Clarice on Facebook</a>
-  </div>
+  <div class="social"><a class="btn" target="_blank" rel="noopener" href="https://www.facebook.com/kylieeeejennerrr">💙 Visit Clarice on Facebook</a></div>
 </section>
 
-<footer>Made with love for my favorite cousin 💕 Happy 23rd, Clarice!</footer>
+<footer>Made with love for my favorite cousin 💕</footer>
 
 <script>
-  /* ---------- Message tabs ---------- */
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.tab, .msg').forEach(el => el.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById(tab.dataset.target).classList.add('active');
-    });
-  });
+  /* Message tabs */
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.tab, .msg').forEach(e => e.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.target).classList.add('active');
+  }));
 
-  /* ---------- Floating balloons ---------- */
-  const colors = ['#ff5fa2', '#8a5cf6', '#ffc94d', '#4cc9f0', '#7ae582'];
-  function balloon() {
+  const colors = ['#ff4f9a', '#5b2a86', '#ffb800', '#4cc9f0', '#7ae582'];
+  const pick = () => colors[Math.floor(Math.random() * colors.length)];
+
+  /* Floating balloons */
+  setInterval(() => {
     const b = document.createElement('div');
     b.className = 'balloon';
     b.style.left = Math.random() * 100 + 'vw';
-    b.style.background = colors[Math.floor(Math.random() * colors.length)];
+    b.style.background = pick();
     b.style.animationDuration = 9 + Math.random() * 7 + 's';
     document.body.appendChild(b);
     setTimeout(() => b.remove(), 17000);
-  }
-  setInterval(balloon, 1400);
+  }, 1500);
 
-  /* ---------- Confetti ---------- */
-  const canvas = document.getElementById('confetti');
-  const ctx = canvas.getContext('2d');
-  let pieces = [];
-  function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
-  addEventListener('resize', resize); resize();
-
-  function burst(n = 160) {
-    for (let i = 0; i < n; i++) {
-      pieces.push({
-        x: innerWidth / 2, y: innerHeight / 3,
-        vx: (Math.random() - .5) * 16, vy: Math.random() * -14 - 4,
-        size: 5 + Math.random() * 7, rot: Math.random() * 6,
-        color: colors[Math.floor(Math.random() * colors.length)], life: 160
-      });
-    }
+  /* Confetti */
+  const cv = document.getElementById('confetti'), ctx = cv.getContext('2d');
+  let bits = [];
+  const fit = () => { cv.width = innerWidth; cv.height = innerHeight; };
+  addEventListener('resize', fit); fit();
+  function burst(n = 150) {
+    for (let i = 0; i < n; i++) bits.push({
+      x: innerWidth / 2, y: innerHeight / 3,
+      vx: (Math.random() - .5) * 16, vy: -4 - Math.random() * 14,
+      s: 5 + Math.random() * 7, r: Math.random() * 6, c: pick(), life: 160
+    });
   }
   (function loop() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    pieces = pieces.filter(p => p.life > 0);
-    pieces.forEach(p => {
-      p.x += p.vx; p.y += p.vy; p.vy += .3; p.rot += .15; p.life--;
-      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
-      ctx.fillStyle = p.color; ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * .6);
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    bits = bits.filter(p => p.life > 0);
+    bits.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.vy += .3; p.r += .15; p.life--;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r);
+      ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 3, p.s, p.s * .6);
       ctx.restore();
     });
     requestAnimationFrame(loop);
   })();
-
-  document.getElementById('party').addEventListener('click', () => { burst(); setTimeout(() => burst(100), 350); });
-  setTimeout(burst, 600); // automatic confetti when the page opens
+  document.getElementById('party').addEventListener('click', () => { burst(); setTimeout(() => burst(90), 350); });
+  setTimeout(burst, 600); // confetti when the page opens
 </script>
 </body>
 </html>
